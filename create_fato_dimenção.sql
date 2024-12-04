@@ -14,15 +14,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema mydb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `viagens_gov` DEFAULT CHARACTER SET utf8 ;
-USE `viagens_gov` ;
+CREATE SCHEMA IF NOT EXISTS `gov_viagens` DEFAULT CHARACTER SET utf8 ;
+USE `gov_viagens` ;
 
 -- -----------------------------------------------------
 -- Table `mydb`.`orgao_pagador`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `viagens_gov`.`orgao_pagador` (
+CREATE TABLE IF NOT EXISTS `gov_viagens`.`orgao_pagador` (
   `cod_orgao_pag` INT NOT NULL AUTO_INCREMENT,
-  `nomedoorgaopagador` VARCHAR(125) NULL,
+  `nome_do_orgao_pagador` VARCHAR(125) NULL,
   PRIMARY KEY (`cod_orgao_pag`))
 ENGINE = InnoDB;
 
@@ -30,9 +30,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`orgao_solicitante`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `viagens_gov`.`orgao_solicitante` (
+CREATE TABLE IF NOT EXISTS `gov_viagens`.`orgao_solicitante` (
   `cod_orgao_solic` INT NOT NULL AUTO_INCREMENT,
-  `nomeorgaosolicitante` VARCHAR(125) NULL,
+  `nome_orgao_solicitante` VARCHAR(125) NULL,
   PRIMARY KEY (`cod_orgao_solic`))
 ENGINE = InnoDB;
 
@@ -40,9 +40,9 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`Pagamento`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `viagens_gov`.`Pagamento` (
+CREATE TABLE IF NOT EXISTS `gov_viagens`.`Pagamento` (
   `id_pagam` INT NOT NULL AUTO_INCREMENT,
-  `tipodepagamento` VARCHAR(45) NULL,
+  `tipo_de_pagamento` VARCHAR(45) NULL,
   PRIMARY KEY (`id_pagam`))
 ENGINE = InnoDB;
 
@@ -50,10 +50,10 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 -- Table `mydb`.`Fato`
 -- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `viagens_gov`.`fato` (
+CREATE TABLE IF NOT EXISTS `gov_viagens`.`fato` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `identificadordoprocessodeviagem` INT NULL,
-  `numerodaproposta` INT NULL DEFAULT NULL,
+  `identificador_do_processo_de_viagem` INT NULL,
+  `numero_da_proposta` INT NULL DEFAULT NULL,
   `ano` INT NULL DEFAULT NULL,
   `cod_orgao_pag` INT NOT NULL,
   `cod_orgao_solic` INT NOT NULL,
@@ -65,13 +65,13 @@ CREATE TABLE IF NOT EXISTS `viagens_gov`.`fato` (
   INDEX `fk_Fato_Pagamento1_idx` (`id_pagam` ASC) VISIBLE,
   CONSTRAINT `fk_Fato_orgao_pagador1`
     FOREIGN KEY (`cod_orgao_pag`)
-    REFERENCES `viagens_gov`.`orgao_pagador` (`cod_orgao_pag`),
+    REFERENCES `gov_viagens`.`orgao_pagador` (`cod_orgao_pag`),
   CONSTRAINT `fk_Fato_orgao_solicitante1`
     FOREIGN KEY (`cod_orgao_solic`)
-    REFERENCES `viagens_gov`.`orgao_solicitante` (`cod_orgao_solic`),
+    REFERENCES `gov_viagens`.`orgao_solicitante` (`cod_orgao_solic`),
   CONSTRAINT `fk_Fato_Pagamento1`
     FOREIGN KEY (`id_pagam`)
-    REFERENCES `viagens_gov`.`pagamento` (`id_pagam`))
+    REFERENCES `gov_viagens`.`pagamento` (`id_pagam`))
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
@@ -80,4 +80,3 @@ COLLATE = utf8mb4_0900_ai_ci;
 SET SQL_MODE=@OLD_SQL_MODE;
 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
-
